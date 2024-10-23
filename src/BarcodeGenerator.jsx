@@ -36,8 +36,9 @@ const BarcodeGenerator = () => {
             </form>
             {barcodeValue && (
                 <div>
-                    <h3>Your Barcode:</h3>
                     <Barcode value={barcodeValue} />
+                    {/* You can also choose to include the value for debugging or logging */}
+                    <div style={{ display: 'none' }}>{barcodeValue}</div>
                 </div>
             )}
         </div>
