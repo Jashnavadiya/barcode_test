@@ -1,32 +1,29 @@
 // BarcodeScanner.jsx
-import React, { useEffect, useRef, useState } from 'react';
-import { BrowserMultiFormatReader } from '@zxing/library';
+import React, { useState } from 'react';
+import QrScanner from 'react-qr-scanner';
 
 const BarcodeScanner = () => {
-    const videoRef = useRef(null);
-    const [result, setResult] = useState('No result');
+    const [data, setData] = useState('No result');
 
-    useEffect(() => {
-        const codeReader = new BrowserMultiFormatReader();
-        codeReader
-            .decodeFromVideoDevice(null, videoRef.current, (error, result) => {
-                if (error) {
-                    console.error(error);
-                } else {
-                    setResult(result.text);
-                }
-            });
+    const handleScan = (data) => {
+        if (data) {
+            setData(data);
+        }
+    };
 
-        return () => {
-            codeReader.reset();
-        };
-    }, []);
+    const handleError = (err) => {
+        console.error(err);
+    };
 
     return (
         <div>
-            <h2>Scan Barcode</h2>
-            <video ref={videoRef} style={{ width: '100%' }} />
-            <p>{result}</p>
+            <h2>Barcode Scanner</h2>
+            <QrScanner
+                onError={handleError}
+                onScan={handleScan}
+                style={{ width: '100%' }}
+            />
+            <p>{data}</p>
         </div>
     );
 };
